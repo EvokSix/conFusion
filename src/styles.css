@@ -1,4 +1,6 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/fonts.css');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 /* You can add global styles to this file, and also import other style files */
 
 
@@ -12,4 +14,17 @@ body {
 .container {
   margin: 20px;
   display:flex;
+}
+
+.background-primary {
+  background-color: #512DA8 !important;
+}
+.background-accent {
+  background-color: #FFC107 !important;
+}
+.text-floral-white {
+  color: floralwhite !important;
+}
+.flex-spacer {
+  flex: 1 1 auto;
 }
