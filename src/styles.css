@@ -1,6 +1,6 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/fonts.css');
-@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import '..\node_modules\font-awesome\css\font-awesome.css';
+@import '..\node_modules\font-awesome\css\font-awesome.min.css';
 /* You can add global styles to this file, and also import other style files */
 
 
