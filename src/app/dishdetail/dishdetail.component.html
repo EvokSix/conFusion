@@ -6,19 +6,19 @@
     fxLayoutGap="10px"
     fxLayoutGap.xs="0">
 
-  <div fxFlex="100">
+  <div fxFlex="100" *ngIf="dish">
     <div>
       <h3>{{dish.name | uppercase}}</h3>
       <hr>
     </div>
   </div>
 
-  <div fxFlex="80">
-    <div fxFlex *ngIf="dish">
+  <div fxFlex="80" *ngIf="dish">
+    <div fxFlex>
       <mat-card>
         <mat-card-header>
           <mat-card-title>
-            <h5>{{dish.name | uppercase}}</h5>
+            <h3>{{dish.name | uppercase}}</h3>
           </mat-card-title>
         </mat-card-header>
         <img mat-card-image src={{dish.image}} alt={{dish.name}}>
@@ -49,4 +49,8 @@
       </mat-card>
     </div>
   </div>
+  <div [hidden]="dish">
+    <mat-spinner></mat-spinner> <h4>Loading...Prease Wait!</h4>
+  </div>
+
 </div>
