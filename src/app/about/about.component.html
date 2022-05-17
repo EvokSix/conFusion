@@ -58,7 +58,7 @@
 
   <div fxFlex>
     <h2>Corporate Leadership</h2>
-    <div *ngIf="leaders">
+    <div *ngIf="leaders" [@expand]>
       <mat-card>
         <mat-card-content *ngFor="let leader of leaders">
           <div style="display: flex">

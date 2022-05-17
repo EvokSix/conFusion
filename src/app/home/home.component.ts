@@ -1,17 +1,27 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { Dish } from '../shared/dish';
-import { DishService } from '../services/dish.service';
 import { Promotion } from '../shared/promotion';
 import { PromotionService } from '../services/promotion.service';
 import { Leader } from '../shared/leader';
+import { flyInOut, expand } from '../animations/app.animation';
+
+import { DishService } from '../services/dish.service';
 import { LeaderService } from '../services/leader.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+  },
+    animations: [
+      flyInOut(),
+      expand()
+    ]
 })
 export class HomeComponent implements OnInit {
 
