@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Dish } from '../shared/dish';
@@ -38,5 +38,15 @@ export class DishService {
     return this.getDishes()
       .pipe(map((dishes) => dishes.map((dish) => dish.id)))
       .pipe(catchError((error) => error));
+  }
+
+  putDish(dish: Dish): Observable<Dish>{
+    const httpOpttions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.put<Dish>(baseURL + 'dishes/' +  dish.id, dish, httpOpttions)
+      .pipe(catchError(this.processHTTPMsg.handleError));
   }
 }
