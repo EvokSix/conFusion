@@ -1,8 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+import { flyInOut,expand } from '../animations/app.animation';
 
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut } from '../animations/app.animation';
+
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -13,19 +17,29 @@ import { flyInOut } from '../animations/app.animation';
     'style': 'display: block;'
   },
     animations: [
-      flyInOut()
+      flyInOut(),
+      expand()
     ]
 })
 
 export class ContactComponent implements OnInit {
 
+  errMess!: string;
   feedbackForm!: FormGroup;
   feedback!: Feedback;
+  copyfeedback!: Feedback;
+  feedbackEmpty!: Feedback;
   contactType = ContactType;
+  statusEnviando: boolean = false;
+  statusEnviado: boolean = false;
+
   @ViewChild('fform') feedbackFormDirective!:NgForm;
 
-  constructor(private fb: FormBuilder) {
-    this.createForm();
+
+  constructor(private feedbackservice: FeedbackService,
+              private fb: FormBuilder,
+              @Inject('baseURL') public baseURL:HttpClient) {
+              this.createForm();
   }
 
   ngOnInit(): void {
@@ -76,38 +90,52 @@ export class ContactComponent implements OnInit {
   }
 
    onValueChanged(data?: any) {
-  //   if (!this.feedbackForm) { return; }
-  //   const form = this.feedbackForm;
-  //   for (const field in this.formErrors) {
-  //     if (this.formErrors.hasOwnProperty(field)) {
-  //       // clear previous error message (if any)
-  //       this.formErrors[field] = '';
-  //       const control = form.get(field);
-  //       if (control && control.dirty && !control.valid) {
-  //         const messages = this.validationMessages[field];
-  //         for (const key in control.errors) {
-  //           if (control.errors.hasOwnProperty(key)) {
-  //             this.formErrors[field] += messages[key] + ' ';
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-   }
+    // if (!this.feedbackForm) { return; }
+    // const form = this.feedbackForm;
+    // for (const field in this.formErrors) {
+    //   if (this.formErrors.hasOwnProperty(field)) {
+    //     // clear previous error message (if any)
+    //     this.formErrors[field] = '';
+    //     const control = form.get(field);
+    //     if (control && control.dirty && !control.valid) {
+    //       const messages = this.validationMessages[field];
+    //       for (const key in control.errors) {
+    //         if (control.errors.hasOwnProperty(key)) {
+    //           this.formErrors[field] += messages[key] + ' ';
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
+  submitFeedback(){
+    this.feedback = this.feedbackForm.value;
+    this.feedbackservice.postFeedback(this.feedback)
+      .subscribe(feedback => {
+        this.feedback = feedback;
+      },
+        errmess => { this.feedback = <any>null; this.errMess = <any>errmess;});
+  }
 
   onSubmit(){
-    this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
-    this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: 0,
-      email: '',
-      agree: false,
-      contacttype: 'None',
-      message: ''
-    });
+    this.statusEnviando = true;
+    this.submitFeedback();
+    setTimeout(()=>{
+      this.statusEnviando = false;this.statusEnviado = true;}, 2000);
+      setTimeout(() => {
+        this.statusEnviado = false;}, 5000);
+        this.feedbackForm.reset({
+          firstname: '',
+          lastname: '',
+          telnum: 0,
+          email: '',
+          agree: false,
+          contacttype: 'None',
+          message: ''
+        });
     this.feedbackFormDirective.resetForm();
   }
+
 
 }

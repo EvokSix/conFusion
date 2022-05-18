@@ -3,7 +3,7 @@ export class Feedback {
   lastname!: string;
   telnum!: number;
   email!: string;
-  agre!: boolean;
+  agree!: boolean;
   contacttype!: string;
   message!: string;
 }

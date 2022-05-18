@@ -64,7 +64,7 @@
           <div style="display: flex">
             <div style="
               flex: 0 0 auto;
-              width: 60px"> <img class="areaImagem" src={{leader.image}}></div>
+              width: 60px"> <img class="areaImagem" src="{{baseURL + leader.image}}"></div>
             <div style="flex: 0 0 auto;">
               <div>{{leader.name}} {{leader.abbr}}</div>
               <div>{{leader.designation}}</div>
@@ -75,7 +75,8 @@
       </mat-card>
     </div>
     <div [hidden]="leaders">
-      <mat-spinner></mat-spinner> <h4>Loading...Prease Wait!</h4>
+      <mat-spinner style="margin-left: 3%;"></mat-spinner>
+       <h4>Loading...Prease Wait!</h4>
     </div>
   </div>
 </div>
